@@ -91,7 +91,7 @@ public class Comment {
                 + ", post="
                 + post.getName()
                 + ", author="
-                + author.getUserName()
+                + author.getUsername()
                 + '}';
     }
 }

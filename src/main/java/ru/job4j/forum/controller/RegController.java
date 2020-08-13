@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.forum.model.User;
 import ru.job4j.forum.service.UserService;
@@ -39,7 +38,7 @@ public class RegController {
             return "redirect:/reg?error=User with nickname or email already exists";
         }
         User user = new User();
-        user.setUserName(username);
+        user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
         userService.save(user);

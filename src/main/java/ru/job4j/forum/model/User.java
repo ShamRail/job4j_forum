@@ -6,7 +6,7 @@ public class User {
 
     private int id;
 
-    private String userName;
+    private String username;
 
     private String password;
 
@@ -20,12 +20,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -54,14 +54,14 @@ public class User {
         }
         User user = (User) o;
         return id == user.id
-                && Objects.equals(userName, user.userName)
+                && Objects.equals(username, user.username)
                 && Objects.equals(password, user.password)
                 && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName, password, email);
+        return Objects.hash(id, username, password, email);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class User {
                 + "id="
                 + id
                 + ", userName='"
-                + userName
+                + username
                 + '\''
                 + ", password='"
                 + password

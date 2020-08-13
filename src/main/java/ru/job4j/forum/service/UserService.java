@@ -23,13 +23,13 @@ public class UserService {
 
     public Optional<User> findByEmailOrUsername(String email, String userName) {
         return users.values().stream()
-                .filter(u -> u.getUserName().equals(userName) || u.getEmail().equals(email))
+                .filter(u -> u.getUsername().equals(userName) || u.getEmail().equals(email))
                 .findAny();
     }
 
     public Optional<User> findByUsernameAndPassword(String username, String password) {
         return users.values().stream()
-                .filter(u -> u.getUserName().equals(username) && u.getPassword().equals(password))
+                .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
                 .findAny();
     }
 }

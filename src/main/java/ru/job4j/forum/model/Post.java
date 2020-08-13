@@ -123,7 +123,7 @@ public class Post {
                 + ", created="
                 + created
                 + ", author="
-                + author.getUserName()
+                + author.getUsername()
                 + ", theme="
                 + theme.getName()
                 + '}';
