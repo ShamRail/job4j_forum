@@ -2,25 +2,31 @@ package ru.job4j.forum.model;
 
 import ru.job4j.forum.utils.DateUtils;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "themes")
 public class Theme {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name = "";
 
-    private String desc = "";
+    private String description = "";
 
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
 
+    @ManyToOne
     private User author;
 
     public static Theme of(String name, String desc) {
         Theme theme = new Theme();
         theme.setName(name);
-        theme.setDesc(desc);
+        theme.setDescription(desc);
         theme.setCreated(LocalDateTime.now());
         return theme;
     }
@@ -63,12 +69,12 @@ public class Theme {
         this.author = author;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String desc) {
+        this.description = desc;
     }
 
     public String formattedDateTime() {

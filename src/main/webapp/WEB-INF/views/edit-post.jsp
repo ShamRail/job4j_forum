@@ -19,7 +19,7 @@
         </div>
         <div class="form-group">
             <label>Описание:</label>
-            <input  type="text" class="form-control" name="desc" value="${post.desc}">
+            <input  type="text" class="form-control" name="desc" value="${post.description}">
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Сохранить</button>

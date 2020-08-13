@@ -49,7 +49,7 @@
                             <c:out value="${theme.name}"/>
                         </a>
                     </td>
-                    <td><c:out value="${theme.desc}"/></td>
+                    <td><c:out value="${theme.description}"/></td>
                     <td><c:out value="${theme.formattedDateTime()}"/></td>
                     <td>
                         <a class="btn btn-danger" href='<c:url value="/theme/delete?id=${theme.id}"/>' aria-label="Удалить">

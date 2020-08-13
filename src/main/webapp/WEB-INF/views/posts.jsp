@@ -46,7 +46,7 @@
                             <c:out value="${post.name}"/>
                         </a>
                     </td>
-                    <td><c:out value="${post.desc}"/></td>
+                    <td><c:out value="${post.description}"/></td>
                     <td><c:out value="${post.formattedDateTime()}"/></td>
                     <td>
                         <a class="btn btn-danger" href='<c:url value="/theme/${themeId}/post/delete?id=${post.id}"/>' aria-label="Удалить">

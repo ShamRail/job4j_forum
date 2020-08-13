@@ -30,8 +30,8 @@ public class CommentController {
             @PathVariable Integer post,
             @RequestParam String text) {
         Comment comment = new Comment();
-        comment.setText(text);
-        comment.setPost(postService.findById(post));
+        comment.setMessage(text);
+        comment.setPost(postService.findById(post).get());
         comment.setCreated(LocalDateTime.now());
         commentService.saveOrUpdate(comment);
         return "redirect:/theme/" + theme + "/post/" + post;

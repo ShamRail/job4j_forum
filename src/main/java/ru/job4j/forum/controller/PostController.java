@@ -39,7 +39,7 @@ public class PostController {
             @RequestParam(name = "id", required = false) Integer id,
             @PathVariable(name = "id") Integer themeId,
             Model model) {
-        Post post = id == null ? new Post() : postService.findById(id);
+        Post post = id == null ? new Post() : postService.findById(id).get();
         model.addAttribute("post", post);
         model.addAttribute("themeId", themeId);
         return "edit-post";
@@ -55,7 +55,7 @@ public class PostController {
         Post post = new Post();
         post.setId(id);
         post.setName(name);
-        post.setDesc(desc);
+        post.setDescription(desc);
         post.setTheme(theme);
         post.setCreated(LocalDateTime.now());
         postService.saveOrUpdate(post);
@@ -73,7 +73,7 @@ public class PostController {
             @PathVariable("id") Integer themeId,
             @PathVariable("postId") Integer postId,
             Model model) {
-        Post post = postService.findById(postId);
+        Post post = postService.findById(postId).get();
         post.setTheme(themeService.findById(themeId).orElseThrow());
         post.setComments(commentService.findByPost(post));
         model.addAttribute("post", post);

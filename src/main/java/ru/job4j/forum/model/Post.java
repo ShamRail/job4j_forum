@@ -2,30 +2,44 @@ package ru.job4j.forum.model;
 
 import ru.job4j.forum.utils.DateUtils;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "posts")
 public class Post {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name = "";
 
-    private String desc = "";
+    private String description = "";
 
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
 
+    @ManyToOne
     private User author;
 
+    @ManyToOne
     private Theme theme;
 
+    @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
     public static Post of(String name) {
         Post post = new Post();
         post.name = name;
+        return post;
+    }
+
+    public static Post idStub(int id) {
+        Post post = new Post();
+        post.setId(id);
         return post;
     }
 
@@ -49,12 +63,12 @@ public class Post {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String desc) {
+        this.description = desc;
     }
 
     public LocalDateTime getCreated() {
@@ -100,13 +114,13 @@ public class Post {
         Post post = (Post) o;
         return id == post.id
                 && Objects.equals(name, post.name)
-                && Objects.equals(desc, post.desc)
+                && Objects.equals(description, post.description)
                 && Objects.equals(created, post.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, desc, created);
+        return Objects.hash(id, name, description, created);
     }
 
     @Override
@@ -118,7 +132,7 @@ public class Post {
                 + name
                 + '\''
                 + ", desc='"
-                + desc
+                + description
                 + '\''
                 + ", created="
                 + created

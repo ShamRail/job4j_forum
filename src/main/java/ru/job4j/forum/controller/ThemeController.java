@@ -35,7 +35,7 @@ public class ThemeController {
             @RequestParam String desc) {
         Theme theme = new Theme();
         theme.setName(name);
-        theme.setDesc(desc);
+        theme.setDescription(desc);
         theme.setId(id);
         theme.setCreated(LocalDateTime.now());
         themeService.saveOrUpdate(theme);

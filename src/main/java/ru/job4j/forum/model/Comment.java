@@ -2,19 +2,26 @@ package ru.job4j.forum.model;
 
 import ru.job4j.forum.utils.DateUtils;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "comments")
 public class Comment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String text;
+    private String message;
 
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
 
+    @ManyToOne
     private Post post;
 
+    @ManyToOne
     private User author;
 
     public String formattedDateTime() {
@@ -29,12 +36,12 @@ public class Comment {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getMessage() {
+        return message;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setMessage(String text) {
+        this.message = text;
     }
 
     public LocalDateTime getCreated() {
@@ -84,7 +91,7 @@ public class Comment {
                 + "id="
                 + id
                 + ", text='"
-                + text
+                + message
                 + '\''
                 + ", created="
                 + created
