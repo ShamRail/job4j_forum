@@ -21,7 +21,7 @@
             <p><b>Тема:</b> <c:out value="${post.theme.name}"/></p>
             <p><b>Пост:</b> <c:out value="${post.name}"/></p>
             <p><b>Дата создания:</b> <c:out value="${post.formattedDateTime()}"/></p>
-            <p><b>Автор:</b> R.Shamsemukhametov</p>
+            <p><b>Автор:</b> <c:out value="${post.author.username}"/></p>
             <p><b>Описание:</b><br> <c:out value="${post.description}"/></p>
         </div>
     </div>
@@ -29,7 +29,7 @@
     <c:forEach items="${post.comments}" var="comment">
         <div class="row">
             <div class="container border border-warning rounded">
-                <p><b>Автор:</b> R.Shamsemukhametov <b>Время:</b> <c:out value="${comment.formattedDateTime()}"/></p>
+                <p><b>Автор:</b> <c:out value="${comment.author.username}"/> <b>Время:</b> <c:out value="${comment.formattedDateTime()}"/></p>
                 <p><c:out value="${comment.message}"/></p>
             </div>
         </div>

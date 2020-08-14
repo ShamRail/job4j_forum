@@ -1,8 +1,15 @@
+create table if not exists authorities (
+    id SERIAL PRIMARY KEY,
+    authority VARCHAR(50) NOT NULL
+);
+
 create table if not exists users(
     id serial primary key,
     username varchar(255),
     password varchar(255),
-    email varchar(255)
+    email varchar(255),
+    enabled boolean default true,
+    authority_id int not null references authorities(id)
 );
 
 create table if not exists themes(

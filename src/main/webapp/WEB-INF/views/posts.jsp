@@ -30,6 +30,7 @@
                 <th scope="col">Тема</th>
                 <th scope="col">Описание</th>
                 <td scope="col">Дата создания:</td>
+                <td scope="col">Автор</td>
                 <td scope="col"></td>
             </tr>
             </thead>
@@ -48,6 +49,7 @@
                     </td>
                     <td><c:out value="${post.description}"/></td>
                     <td><c:out value="${post.formattedDateTime()}"/></td>
+                    <td><c:out value="${post.author.username}"/></td>
                     <td>
                         <a class="btn btn-danger" href='<c:url value="/theme/${themeId}/post/delete?id=${post.id}"/>' aria-label="Удалить">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>

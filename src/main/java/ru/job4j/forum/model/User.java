@@ -17,6 +17,27 @@ public class User {
 
     private String email;
 
+    private boolean enabled = true;
+
+    @ManyToOne
+    private Authority authority;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Authority getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
+
     public int getId() {
         return id;
     }

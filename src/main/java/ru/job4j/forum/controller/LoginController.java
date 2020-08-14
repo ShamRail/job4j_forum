@@ -1,42 +1,41 @@
 package ru.job4j.forum.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.job4j.forum.model.User;
-import ru.job4j.forum.service.UserService;
 
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 
-    private final UserService userService;
-
-    public LoginController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @GetMapping
-    public String loadPage(Model model, @RequestParam(required = false, name = "error") String error) {
+    @GetMapping("/login")
+    public String loginPage(@RequestParam(value = "error", required = false) String error,
+                            @RequestParam(value = "logout", required = false) String logout,
+                            Model model) {
+        String errorMsg = null;
         if (error != null) {
-            model.addAttribute("errorMsg", error);
+            errorMsg = "Username or Password is incorrect !!";
         }
+        if (logout != null) {
+            errorMsg = "You have been successfully logged out !!";
+        }
+        model.addAttribute("errorMsg", errorMsg);
         return "login";
     }
 
-    @PostMapping
-    public String login(
-            @RequestParam String username, @RequestParam String password) {
-        Optional<User> userDB = userService.findByUsernameAndPassword(username, password);
-        if (userDB.isEmpty()) {
-            return "redirect:/login?error=Invalid username or login";
+    @GetMapping(value = "/logout")
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/";
+        return "redirect:/login?logout=true";
     }
 
 }

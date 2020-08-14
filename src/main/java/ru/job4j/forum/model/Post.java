@@ -136,10 +136,6 @@ public class Post {
                 + '\''
                 + ", created="
                 + created
-                + ", author="
-                + author.getUsername()
-                + ", theme="
-                + theme.getName()
                 + '}';
     }
 }

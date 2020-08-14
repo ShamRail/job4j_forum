@@ -1,13 +1,16 @@
 package ru.job4j.forum.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.forum.model.Post;
 import ru.job4j.forum.model.Theme;
+import ru.job4j.forum.model.User;
 import ru.job4j.forum.service.CommentService;
 import ru.job4j.forum.service.PostService;
 import ru.job4j.forum.service.ThemeService;
+import ru.job4j.forum.service.UserService;
 
 import java.time.LocalDateTime;
 
@@ -21,10 +24,16 @@ public class PostController {
 
     private final CommentService commentService;
 
-    public PostController(PostService postService, ThemeService themeService, CommentService commentService) {
+    private final UserService userService;
+
+    public PostController(PostService postService,
+                          ThemeService themeService,
+                          CommentService commentService,
+                          UserService userService) {
         this.postService = postService;
         this.themeService = themeService;
         this.commentService = commentService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -50,9 +59,14 @@ public class PostController {
             @PathVariable(name = "id") Integer themeId,
             @RequestParam Integer id,
             @RequestParam String name,
-            @RequestParam String desc) {
+            @RequestParam String desc,
+            Authentication authentication) {
+        org.springframework.security.core.userdetails.User u =
+                (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+        User user = userService.findByUsername(u.getUsername()).get();
         Theme theme = themeService.findById(themeId).orElseThrow();
         Post post = new Post();
+        post.setAuthor(user);
         post.setId(id);
         post.setName(name);
         post.setDescription(desc);
