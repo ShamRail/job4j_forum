@@ -1,0 +1,1 @@
+insert into users(username, password, email, authority_id) values ('root', '$2a$10$wY1twJhMQjGVxv4y5dBC5ucCBlzkzT4FIGa4FNB/pS9GaXC2wm9/W', 'root', 2);
