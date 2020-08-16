@@ -8,6 +8,10 @@ jdk:
 
 sudo: false
 
+install: true
+
+script: mvn clean package -DskipTests=true
+
 # Отправлять уведомление на почтуmailto:youremail@smtp.ru(Изменить на свою) если сборка упала
 notifications:
   email:
@@ -15,3 +19,9 @@ notifications:
       - rail.shamsemukhametov@mail.ru
     on_success: never # default: change
     on_failure: always # default: always
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: sbdeyiC8o2rJJrwhO2G3C0e26AV44pSL2UM7U4wDcrA6o7+CaNu3Y8Nz/Eok5SjPeu8UGkMrNPeVTE/1OP6CkWDxbSI3eAocM4ujYXnPtWHygCh8BopgOq+yBMqJty4H0qUsOGydoFGT2GwDo26qjNr/kCfsKSO6UKigdke669l6m/BF3qXEHKst/N9ltlgakqZ8uwtEbKZaIOBZs6n0/i5h6F0k917aMw3/ubJEWZ+Hd76+EP3ILOQGC1gQFQO5xnWPYOgnv74gEUN3NctYOr7VAo4Oqad2WQW0TyoVeWrYGRREVK4Pv1pVw5AfKQQFVw8I7IplmJiEbEy11ziAqVAv+NeE6+E0pBL37cffM0LC8ckXmQZ5fwvo93TvhTZ8EsEU2Sdfegl8HTh2IVGxXWH397txZi/y3UG2Ui4EJDQFk4Eu0mP2IOsj4pyIT1ZoZITNfE0LS9yfoLVpUgITIWFfkgpola15XOMcGoVwDN6MYINZhLotS90XcpRUUmlpFGS930SfduxgE4bnfrfGTcru6AmA/rJxSB9NJAAWSmwwjx/Jt1oxtws0/bfkgltj0JeQS0UCpkCjf+PnJ1Eckt27LybUoUvW4TFF9/9SKDeVgiXpGbZkOE/dk72keyuh2YTh68PA8iB7TwfHvoXjUuVyQwI4GmSZsdNLHKBltyU=
+  app: lit-thicket-57508
