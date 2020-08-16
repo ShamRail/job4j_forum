@@ -1,6 +1,7 @@
 package ru.job4j.forum.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,9 +18,10 @@ import javax.sql.DataSource;
 //@EnableWebSecurity(debug = true)
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+//    @Autowired
+//    PasswordEncoder passwordEncoder;
 
+    @Qualifier("dataSource")
     @Autowired
     DataSource dataSource;
 
