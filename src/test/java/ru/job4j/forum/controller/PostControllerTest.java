@@ -1,7 +1,8 @@
 package ru.job4j.forum.controller;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,14 +13,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.job4j.forum.Main;
 import ru.job4j.forum.model.Post;
 import ru.job4j.forum.model.Theme;
+import ru.job4j.forum.model.User;
 import ru.job4j.forum.service.CommentService;
 import ru.job4j.forum.service.PostService;
 import ru.job4j.forum.service.ThemeService;
+import ru.job4j.forum.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -39,6 +43,9 @@ public class PostControllerTest {
 
     @MockBean
     private CommentService commentService;
+
+    @MockBean
+    private UserService userService;
 
     @Test
     @WithMockUser
@@ -60,6 +67,33 @@ public class PostControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("post"));
+    }
+
+    @Test
+    @WithMockUser(username = "test")
+    public void whenCreatePost() throws Exception {
+        User user = new User();
+        user.setUsername("test");
+        Mockito.when(userService.findByUsername("test")).thenReturn(Optional.of(user));
+        Theme theme = new Theme();
+        theme.setName("theme");
+        Mockito.when(themeService.findById(1)).thenReturn(Optional.of(theme));
+        mockMvc.perform(
+                post("/theme/1/post/create")
+                .param("id", "0")
+                .param("name", "name")
+                .param("desc", "desc")
+        )
+                .andDo(print())
+                .andExpect(status().is3xxRedirection());
+        ArgumentCaptor<Post> argument = ArgumentCaptor.forClass(Post.class);
+        Mockito.verify(postService).saveOrUpdate(argument.capture());
+        Post out = argument.getValue();
+        Assert.assertEquals("test", out.getAuthor().getUsername());
+        Assert.assertEquals("theme", out.getTheme().getName());
+        Assert.assertEquals(0, out.getId());
+        Assert.assertEquals("name", out.getName());
+        Assert.assertEquals("desc", out.getDescription());
     }
 
 }
